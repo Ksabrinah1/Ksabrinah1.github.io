@@ -198,28 +198,10 @@ function hasEmptyTile() {
     return false;
 }
 
-//  //check for the number 2048 in the squares to win
-//  function checkForWin() {
-//     for (let r=0; r < rows.length; r++) {
-//         if (rows[r].innerHTML == 2048) {
-//         resultDisplay.innerHTML = 'You WIN'
-//         document.removeEventListener('keyup', control)
-//         setTimeout(() => clear(), 3000)
-//         }
-//     }
-//     }
-
-//     //check if there are no zeros on the board to lose
-//     function checkForGameOver() {
-//     let zeros = 0
-//     for (let r = 0; r < rows.length; r++) {
-//         if (rows[r].innerHTML == 0) {
-//         zeros++
-//         }
-//     }
-//     if (zeros === 0) {
-//         resultDisplay.innerHTML = 'You LOSE'
-//         document.removeEventListener('keyup', control)
-//         setTimeout(() => clear(), 3000)
-//     }
-// }
+/* Rubric for reference when buiding onto 2048 game:
+* Game keeps track of your high score
+* Game keeps track of your highest tile achieved
+* Different sizes of the game introduced
+* Isn't too buggy and works
+* Stores game state in cookie/localStorage so that player can close window, and when they return the game is saved.
+*/
