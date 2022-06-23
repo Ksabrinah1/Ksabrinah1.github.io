@@ -1,0 +1,104 @@
+<html>
+
+  <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <H1>Flashing Circle</H1>
+    <p>Click the red circle to win!</p>
+    <canvas id="canvas"></canvas><br>
+    <input type="radio" value="1" name="level" checked>Easy
+    <input type="radio" value="2" name="level">Medium
+    <input type="radio" value="3" name="level">Hard<br>
+    <button id="start">Start</button><br><br>
+    Score: <span id="record"></span><br>
+    <button id="save">
+    Save Score
+    </button>
+    <br><br>
+    Highest Record: <span id="show"></span>
+    <script>
+      aCircle = function(ctx, x, y, color, circleSize) {
+        ctx.beginPath();
+        ctx.arc(x, y, circleSize, 0, Math.PI * 2, true);
+        ctx.fillStyle = color
+        ctx.fill();
+        ctx.closePath();
+        this.clicked = function() {
+          clearInterval(window.x)
+          if (ctx.fillStyle == obj[0]) {
+            alert("you win!")
+            record++
+            $('#record').text(record)
+          } else {
+            alert("you lose")
+          }
+
+        }
+      };
+
+      var x = ''
+      var record = 0
+      var highestRecord = $.cookie('record') > 0 ? $.cookie('record') : 'no set'
+      var canvas = document.getElementsByTagName("canvas")[0];
+      var ctx = canvas.getContext('2d');
+      var bigGreen = new aCircle(ctx, 50, 50, '#5eb62b', 50);
+      var obj = ['#ff0000', '#5eb62b', '#0000ff']
+
+
+      $('#record').text(record)
+
+      $('#start').on('click', function() {
+        changeColor($('input[name="level"]:checked').val())
+      })
+
+      $('#canvas').on('click', function() {
+        bigGreen.clicked()
+      })
+
+      $('#save').on('click', function() {
+        $.cookie('record', record, {
+          expires: 7
+        })
+        highestRecord = $.cookie('record')
+        $('#show').text(highestRecord)
+      })
+
+      $('#show').text(highestRecord)
+
+      $('input[name = "level"]').on('change', function() {
+        clearInterval(x)
+      })
+
+      function changeColor(difficulty) {
+        var i = 0
+        var level = 0
+
+        if (difficulty == 1) {
+          level = 3000
+        } else if (difficulty == 2) {
+          level = 2000
+        } else {
+          level = 900
+        }
+
+        x = setInterval(function() {
+          ctx.fillStyle = obj[i]
+          ctx.fill()
+
+          if (i < obj.length - 1) {
+            i++
+          } else {
+            i = 0
+          }
+        }, level)
+        console.log(difficulty)
+      }
+
+    </script>
+
+  </body>
+
+</html>
